@@ -28,7 +28,7 @@ if st.button("✨ 카피 생성하기"):
 
     with st.spinner("카피 생성 중..."):
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4-turbo",
             messages=[
                 {
                     "role": "system",
