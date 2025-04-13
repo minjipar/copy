@@ -1,13 +1,13 @@
 
 import streamlit as st
-import openai
+from openai import OpenAI
 
 st.set_page_config(page_title="Fighting Designer", layout="centered")
 
 st.title("🧠 Fighting Designer")
 st.markdown("제품명과 특징을 입력하면, 톤에 맞는 카피를 자동으로 만들어줘요!")
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 product = st.text_input("📦 제품명", placeholder="예: 촉촉한 착붙쿠션")
 features = [st.text_input(f"✨ 특징 {i+1}", key=f"feature_{i}") for i in range(3)]
@@ -27,7 +27,7 @@ if st.button("✨ 카피 생성하기"):
 → 이 제품을 매력적으로 보이게 할 수 있는 마케팅 카피 3개 써줘. 한국어로 짧고 인상적으로!"""
 
     with st.spinner("카피 생성 중..."):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
